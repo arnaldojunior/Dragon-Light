@@ -1,0 +1,67 @@
+@font-face {
+    font-family: "House On Mars";
+    src: url(../fontes/house_on_mars.ttf);
+}
+
+@font-face {
+    font-family: Champagne;
+    src: url(../fontes/champagne.ttf);
+}
+
+* { margin: 0; padding: 0; }
+
+body { 
+    background: url(../img/background2.jpg) 0 0 no-repeat; 
+    background-size: 100%;
+}
+
+#container {
+    max-width: 1300px;
+    margin: 0 auto;
+    position: relative;
+    text-align: center;
+}
+
+h1 {
+    text-align: center;
+    font-size: 400%;
+    color: #0a6082;
+    display: inline-block;
+    font-family: "House On Mars";
+    border-bottom: 2px solid #0a6082;
+    margin-top: 5%;
+}
+
+nav { 
+    width: 30%;
+    margin: 3% auto;
+}
+
+ul { list-style: none; }
+
+ul li {
+    margin: 4% 0;
+    padding: 3%;
+    background: darkblue;
+    border: 2px solid #0a6082;
+    border-radius: 1em;
+}
+
+li a {
+    text-decoration: none;
+    font: 600 200% Champagne;
+    color: lightcyan;
+    display: block;
+}
+
+li a:hover {
+    color: lightcoral;
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #0a6082;
+}

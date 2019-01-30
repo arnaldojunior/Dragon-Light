@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>Demo</title>
+	<link rel="stylesheet" href="css/battle.css" />
+	<link rel="stylesheet" href="css/animation.css" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<script src="jquery-3.3.1.min.js"></script>
+	<script src="js/battle.js"></script>
+</head>
+
+<body>
+	<h1><a href="home.html">Battle Mode</a></h1>
+	<div id="container">
+		<div class="menu-box">
+			<div class="player-box">
+				<h2>Player 1</h2>
+				<div class="player-status one">
+					<figure>
+						<img></img>
+					</figure>
+					<label for="name">Name: 
+						<input class="name" readonly>
+					</label>
+					<label for="life">Life: 
+						<input class="life" readonly>
+					</label>
+					<label for="attack">Attack: 
+						<input class="attack" readonly>
+					</label>
+				</div>
+				<button class="select-player-one">Select</button>
+			</div>
+			<div class="map-select-box">
+				<h2>Choose a map</h2>
+				<div class="map-select">
+				</div>
+			</div>
+		</div>
+		<div id="cenario">
+			<div class="player player-one"></div>
+			<div class="player player-two"></div>
+			<div class="player-select-box">
+				<h2>Selecione uma Personagem</h2>
+				<div class="player-face" id="0"></div>
+				<div class="player-face" id="1"></div>
+				<div class="player-face" id="2"></div>
+			</div>
+		</div>
+		<div class="menu-box">
+			<div class="player-box">
+				<h2>Player 2</h2>
+				<div class="player-status two">
+					<figure>
+						<img class="player-two-img"></img>
+					</figure>
+					<label for="name">Name: 
+						<input class="name" readonly>
+					</label>
+					<label for="life">Life: 
+						<input class="life" readonly>
+					</label>
+					<label for="attack">Attack: 
+						<input class="attack" readonly>
+					</label>
+				</div>
+				<button class="select-player-two">Select</button>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

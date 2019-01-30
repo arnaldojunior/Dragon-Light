@@ -1,0 +1,218 @@
+/* 
+    Created on : 28/08/2018, 17:23:51
+    Author     : Arnaldo Junior
+*/
+
+@font-face {
+    font-family: "House On Mars";
+    src: url(../fontes/house_on_mars.ttf);
+}
+
+@font-face {
+    font-family: Champagne;
+    src: url(../fontes/champagne.ttf);
+}
+
+* { margin: 0; padding: 0; }
+
+body { background: lightcyan; }
+
+/* Adiciona uma camada sobre o body quando uma caixa de seleção é aberta. */
+.select-open::after {
+    z-index: 1;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    content: "";
+    background-color: rgba(0,0,0,0.7)
+}
+
+#container {
+    max-width: 1300px;
+    margin: 0 auto;
+    position: relative;
+    text-align: center;
+}
+
+h1 {
+    text-align: center;
+    position: fixed;
+    width: 100%;
+    background: darkblue;
+    color: lightcyan;
+    padding: 0.3em;
+    font-family: "House On Mars";
+    z-index: 1;
+    border-bottom: 2px solid #0a6082;
+}
+
+h1 a { text-decoration: none; color: lightcyan; }
+
+h2 {
+    font: bold 25px Champagne;
+    text-align: center;
+    background: darkblue;
+    color: white;
+    padding: 5px;
+    border-bottom: 2px solid #0a6082;
+}
+
+#cenario {
+    width: 640px;
+    height: 640px;
+    background: whitesmoke;
+    display: inline-block;
+    position: relative;
+    margin: 100px 40px 20px;
+    text-align: left;
+    font-size: 0px; /*retira o espaço que há entre as divs ao quebrar uma linha*/
+    border-top: 1px solid gainsboro;
+    border-left: 1px solid gainsboro;
+    vertical-align: top;
+}
+
+.not-empty { 
+    width: 128px;
+    height: 128px;
+    display: inline-block;
+    word-spacing: 0;
+    box-sizing: border-box;
+    border: none; 
+}
+
+.menu-box, .player-box, .map-select-box {
+    display: inline-block;
+    width: 262px;
+    vertical-align: top;
+    margin: 100px 0;
+}
+.player-box, .map-select-box { 
+    border: 2px solid #0a6082; 
+    margin-top: 0; 
+    background: whitesmoke;
+}
+.map-select-box { display: none; }
+.map-select { padding: 10px 0; }
+.map-icon {
+    width: 55px;
+    height: 55px;
+    background-color: lightcoral;
+    border-radius: 5px;
+    display: inline-block;
+    margin-right: 3px;
+    cursor: pointer;
+}
+.map-icon:last-of-type { margin-right: 0; }
+.map-icon:hover { background: lightseagreen; }
+.map-icon p {
+    color: whitesmoke;
+    font: 600 20px Arial;
+    vertical-align: middle;
+    line-height: 55px;
+}
+
+.player-status { text-align: left; padding: 10px; }
+
+.player-status figure {
+    margin-bottom: 5px;
+    width: 105px;
+    height: 100px;
+    background-color: #ffeecc;
+    border: 1px solid #0a6082;
+    position: relative;
+    box-shadow: 1px 1px 2px 2px rgba(0,0,0,0.5);
+}
+
+.player-status img {
+    width: 96px;
+    height: 96px;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 0;
+}
+
+.player-status > label {
+    color: #2F4F4F;
+    font: bold 17px Arial; 
+    display: block;
+    position: relative;
+}
+
+.player-status input {
+    position: absolute;
+    right: 0;
+    font: 500 0.9em Arial;
+    color: #808080;
+    border: none;
+    padding: 2px;
+    background: whitesmoke;
+    width: 173px;
+}
+
+.player-box button {
+    display: block;
+    margin: 10px 5px;
+    padding: 5px 10px;
+    background: lightskyblue;
+    color: darkblue;
+    font-weight: 600;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.player-box button:hover { color: white; }
+.one, .two { display: none; }
+
+/* Elemento Jogável*/
+.player {
+    width: 96px;
+    height: 96px;
+    position: absolute;
+    top: 270px;
+    display: none;
+}
+.player-one { left: 16px; }
+.player-two { right: 16px; }
+
+/* Caixa de seleção da personagem */
+.player-select-box {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border: 2px solid #0a6082;
+    display: none;
+    z-index: 2;
+}
+
+/* Imagem da personagem na caixa de seleção */
+.player-face {
+    width: 100px;
+    height: 98px;
+    display: inline-block;
+    border: 2px solid lightgoldenrodyellow;
+    box-sizing: border-box;
+}
+
+.player-face:hover { 
+    cursor: pointer;
+    background-color: lightskyblue !important;
+    border: 2px solid lightskyblue; 
+}
+
+.player-face:first-of-type {
+    background: lightgoldenrodyellow url(../img/personagens/black_dragon.png) 0 0;
+    background-size: 384px !important;
+}
+.player-face:nth-of-type(2) {
+    background: url(../img/personagens/blue_wings_black_dragon.png) 0 0 lightgoldenrodyellow;
+    background-size: 384px !important;
+}
+.player-face:last-of-type {
+    background: url(../img/personagens/blue_green_dragon.png) -96px 0 lightgoldenrodyellow;
+    background-size: 288px !important;
+}

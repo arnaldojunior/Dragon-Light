@@ -1,0 +1,195 @@
+/* 
+    Created on : 28/08/2018, 17:23:51
+    Author     : Arnaldo Junior
+*/
+
+@font-face {
+    font-family: "House On Mars";
+    src: url(../fontes/house_on_mars.ttf);
+}
+
+@font-face {
+    font-family: Belltrain;
+    src: url(../fontes/belltrain.ttf);
+}
+
+@font-face {
+    font-family: Champagne;
+    src: url(../fontes/champagne.ttf);
+}
+
+* { margin: 0; padding: 0; }
+
+body { background: lightcyan; }
+
+/* Adiciona uma camada sobre o body quando uma caixa de seleção é aberta. */
+.select-open::after {
+    z-index: 1;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    content: "";
+    background-color: rgba(0,0,0,0.7)
+}
+
+#container {
+    max-width: 1300px;
+    margin: 0 auto;
+    position: relative;
+    text-align: center;
+}
+
+h1 {
+    text-align: center;
+    position: fixed;
+    width: 100%;
+    background: darkblue;
+    color: lightcyan;
+    padding: 0.3em;
+    font-family: "House On Mars";
+    z-index: 1;
+    border-bottom: 2px solid #0a6082;
+}
+
+h1 a { text-decoration: none; color: lightcyan; }
+
+h2 {
+    font: bold 25px Champagne;
+    text-align: center;
+    background: darkblue;
+    color: white;
+    padding: 5px;
+    border-bottom: 2px solid #0a6082;
+}
+
+#comandos, #tiles { margin-top: 100px; }
+
+#cenario {
+    width: 640px;
+    height: 640px;
+    background: whitesmoke;
+    display: inline-block;
+    position: relative;
+    margin: 100px 40px 20px;
+    text-align: left;
+    font-size: 0px; /*retira o espaço que há entre as divs ao quebrar uma linha*/
+    border-top: 1px solid gainsboro;
+    border-left: 1px solid gainsboro;
+    vertical-align: top;
+}
+
+.empty-tile:hover, .not-empty:hover { border: 2px solid gray; }
+
+.empty-tile, .not-empty, #tiles div {
+    width: 128px;
+    height: 128px;
+    display: inline-block;
+    word-spacing: 0;
+    box-sizing: border-box;
+}
+
+/*Blocos vazios do Cenário*/
+.empty-tile {
+    border-bottom: 1px solid gainsboro;
+    border-right: 1px solid gainsboro;
+}
+
+.not-empty { border: none; }
+ 
+/* Tiles para a criação do cenário */
+#tiles {
+    display: inline-block;
+    width: 273px;
+    height: 550px;
+    border: 2px solid #0a6082;
+    background: whitesmoke;
+    font-size: 0;
+    text-align: left;
+    overflow-y: scroll;
+}
+
+#tiles div:hover:not(.selecionado) {
+    border: 2px solid whitesmoke;
+}
+
+/* Marca o tile selecionado */
+.selecionado {
+    border-radius: 20px;
+    border: 1px solid whitesmoke;
+}
+
+/*Comandos para Criação do Cenário*/
+#comandos {
+    display: inline-block;
+    width: 256px;
+    border: 2px solid #0a6082;
+    background: whitesmoke;
+    vertical-align: top;
+}
+
+#comandos button {
+    display: block;
+    margin-bottom: 10px;
+    margin-left: 5px;
+    padding: 5px 10px;
+    background: lightskyblue;
+    color: darkblue;
+    font-weight: 600;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+#comandos button:hover { color: white; }
+#comandos h2 { margin-bottom: 10px; }
+
+/*Elemento Jogável*/
+.personagem {
+    width: 96px;
+    height: 96px;
+    position: absolute;
+    top: 270px;
+    left: 270px;
+    display: none;
+}
+
+/* Selecionar Personagem */
+.personagem-select {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border: 2px solid #0a6082;
+    display: none;
+    z-index: 2; /* ficar em evidência quando a tela for escurecida */
+}
+
+/* Caixa de Seleção de Personagens */
+.personagem-face {
+    width: 100px;
+    height: 98px;
+    display: inline-block;
+    border: 2px solid lightgoldenrodyellow;
+    box-sizing: border-box;
+}
+
+.personagem-face:hover { 
+    cursor: pointer;
+    background-color: lightskyblue !important;
+    border: 2px solid lightskyblue; 
+}
+
+.personagem-face:first-of-type {
+    background: lightgoldenrodyellow url(../img/personagens/black_dragon.png) 0 0;
+    background-size: 384px !important;
+}
+.personagem-face:nth-of-type(2) {
+    background: url(../img/personagens/blue_wings_black_dragon.png) 0 0 lightgoldenrodyellow;
+    background-size: 384px !important;
+}
+.personagem-face:last-of-type {
+    background: url(../img/personagens/blue_green_dragon.png) -96px 0 lightgoldenrodyellow;
+    background-size: 288px !important;
+}

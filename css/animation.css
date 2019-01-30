@@ -1,0 +1,27 @@
+/* ANIMAÇÕES DE TILES */
+.lava-flowing {
+    background: url('../img/tiles/default_lava_flowing_animated.png') !important;
+    animation: lava-flowing 1.6s steps(8) infinite;
+}
+.water-flowing {
+    background: url('../img/tiles/default_river_water_flowing_animated.png') !important;
+    animation: water-flowing 1.6s steps(8) infinite;
+}
+
+@keyframes lava-flowing {
+    100% { background-position-y: -1024px; };
+}
+@keyframes water-flowing {
+    100% { background-position-y: -1024px; };
+}
+
+/* ANIMAÇÕES DE PERSONAGENS */
+.dragao { animation: dragao 1s steps(4) infinite; background-size: 384px }
+.dragao-3steps { animation: dragao-3steps 0.75s steps(3) infinite; background-size: 288px }
+
+@keyframes dragao {
+    100% { background-position-x: -384px };
+}
+@keyframes dragao-3steps {
+    100% { background-position-x: -288px };
+}
