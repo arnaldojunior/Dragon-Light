@@ -2,21 +2,6 @@
     Created on : 28/08/2018, 17:23:51
     Author     : Arnaldo Junior
 */
-
-@font-face {
-    font-family: "House On Mars";
-    src: url(../fontes/house_on_mars.ttf);
-}
-
-@font-face {
-    font-family: Champagne;
-    src: url(../fontes/champagne.ttf);
-}
-
-* { margin: 0; padding: 0; }
-
-body { background: lightcyan; }
-
 /* Adiciona uma camada sobre o body quando uma caixa de seleção é aberta. */
 .select-open::after {
     z-index: 1;
@@ -27,50 +12,6 @@ body { background: lightcyan; }
     height: 100%;
     content: "";
     background-color: rgba(0,0,0,0.7)
-}
-
-#container {
-    max-width: 1300px;
-    margin: 0 auto;
-    position: relative;
-    text-align: center;
-}
-
-h1 {
-    text-align: center;
-    position: fixed;
-    width: 100%;
-    background: darkblue;
-    color: lightcyan;
-    padding: 0.3em;
-    font-family: "House On Mars";
-    z-index: 1;
-    border-bottom: 2px solid #0a6082;
-}
-
-h1 a { text-decoration: none; color: lightcyan; }
-
-h2 {
-    font: bold 25px Champagne;
-    text-align: center;
-    background: darkblue;
-    color: white;
-    padding: 5px;
-    border-bottom: 2px solid #0a6082;
-}
-
-#cenario {
-    width: 640px;
-    height: 640px;
-    background: whitesmoke;
-    display: inline-block;
-    position: relative;
-    margin: 100px 40px 20px;
-    text-align: left;
-    font-size: 0px; /*retira o espaço que há entre as divs ao quebrar uma linha*/
-    border-top: 1px solid gainsboro;
-    border-left: 1px solid gainsboro;
-    vertical-align: top;
 }
 
 .not-empty { 
@@ -86,7 +27,6 @@ h2 {
     display: inline-block;
     width: 262px;
     vertical-align: top;
-    margin: 100px 0;
 }
 .player-box, .map-select-box { 
     border: 2px solid #0a6082; 

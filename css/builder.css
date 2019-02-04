@@ -1,0 +1,60 @@
+.empty-tile:hover, .not-empty:hover { border: 2px solid gray; }
+
+.empty-tile, .not-empty, #tiles div {
+    width: 128px;
+    height: 128px;
+    display: inline-block;
+    word-spacing: 0;
+    box-sizing: border-box;
+}
+
+/*Blocos vazios do Cenário*/
+.empty-tile {
+    border-bottom: 1px solid gainsboro;
+    border-right: 1px solid gainsboro;
+}
+.not-empty { border: none; }
+ 
+/* Tiles para a criação do cenário */
+#tiles {
+    display: inline-block;
+    width: 273px;
+    height: 550px;
+    border: 2px solid #0a6082;
+    background: whitesmoke;
+    font-size: 0;
+    text-align: left;
+    overflow-y: scroll;
+}
+#tiles div:hover:not(.selecionado) { border: 2px solid whitesmoke; }
+
+/* Marca o tile selecionado */
+.selecionado {
+    border-radius: 20px;
+    border: 1px solid whitesmoke;
+}
+
+/*Comandos para Criação do Cenário*/
+#comandos {
+    display: inline-block;
+    width: 256px;
+    border: 2px solid #0a6082;
+    background: whitesmoke;
+    vertical-align: top;
+}
+
+#comandos button {
+    display: block;
+    margin-bottom: 10px;
+    margin-left: 5px;
+    padding: 5px 10px;
+    background: lightskyblue;
+    color: darkblue;
+    font-weight: 600;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+#comandos button:hover { color: white; }
+#comandos h2 { margin-bottom: 10px; }

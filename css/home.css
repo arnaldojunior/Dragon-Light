@@ -32,11 +32,8 @@ h1 {
     margin-top: 5%;
 }
 
-nav { 
-    width: 30%;
-    margin: 3% auto;
-}
-
+/* MENU */
+nav { width: 30%; margin: 3% auto; }
 ul { list-style: none; }
 
 ul li {
@@ -54,14 +51,4 @@ li a {
     display: block;
 }
 
-li a:hover {
-    color: lightcoral;
-}
-
-footer {
-    position: fixed;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    color: #0a6082;
-}
+li a:hover { color: lightcoral; }

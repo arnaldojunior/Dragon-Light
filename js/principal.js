@@ -50,50 +50,7 @@ $(function () {
     //Remove todos os tiles do cenário.
     $("#limpar").click(function () {
         $("#cenario div").css("background", "none");
+        $("#cenario div").removeClass();
         $("#cenario div").addClass("empty-tile");
-        $("#cenario div").removeClass("not-empty fogo");
-    });
-
-    //Abre a caixa de seleção de personagem.
-    $("#new-personagem").click(function () {
-        if ($("#cenario").children().length < 16) {
-            alert();
-        } else {
-            $(".personagem-select").css("display", "block");
-            $("body").addClass("select-open");
-        }
-    });
-
-    //Inicializa o personagem selecionado.
-    $(".personagem-face").click(function () {
-        $(".personagem").css({
-            background: $(this).css("background-image"),
-            display: "block" //faz aparecer o personagem
-        });
-        if ($(this).css("background-size") == "288px") {
-            $(".personagem").addClass("dragao-3steps");
-        } else {
-            $(".personagem").removeClass("dragao-3steps");
-            $(".personagem").addClass("dragao");
-        }
-        $(".personagem-select").css("display", "none"); //fecha a caixa de seleção
-        $("body").removeClass("select-open");
-    });
-
-    //Funções para mover o personagem através do teclado.
-    $(document).keydown(function (e) {
-        if (e.which == 37) { //left
-            $(".personagem").animate({ left: '-=128px' });
-            $(".personagem").css("background-position-y", "-96px");
-        } else if (e.which == 38) { //up
-            $(".personagem").animate({ top: '-=128px' });
-            $(".personagem").css("background-position-y", "-288px");
-        } else if (e.which == 39) { //right
-            $(".personagem").animate({ left: '+=128px' });
-            $(".personagem").css("background-position-y", "-192px");
-        } else if (e.which == 40) { //down
-            $(".personagem").animate({ top: '+=128px' });
-            $(".personagem").css("background-position-y", "0");
-        }
     });
 });
