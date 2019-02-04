@@ -113,7 +113,7 @@
     height: 96px;
     position: absolute;
     top: 270px;
-    display: none;
+    display: block;
 }
 .player-one { left: 16px; }
 .player-two { right: 16px; }

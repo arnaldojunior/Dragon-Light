@@ -22,7 +22,6 @@ $(function () {
         "img/tiles/default_snow_side.png", "img/tiles/default_stone.png", "img/tiles/default_stone_block.png",
     ];
 
-
     // FUNÇÕES PARA CONSTRUÇÃO DO CENÁRIO
     var map1 = [21, 21, 21, 10, 10, 10, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 10, 21, 10, 21, 21, 21, 21];
     var map2 = [14, 17, 15, 15, 17, 14, 15, 15, 15, 15, 14, 15, 15, 15, 15, 14, 17, 15, 15, 15, 14, 14, 14, 14, 14];
@@ -30,14 +29,23 @@ $(function () {
     var map4 = [17, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 17, 4, 4, 17, 4, 4, 4, 4, 4, 4, 4, 4];
     var maps = [map1, map2, map3, map4];
 
-    //buildMap(map2);
+    initTest();
+
+    function initTest() {
+        buildMap(maps[0]);
+        $(".player-one, .player-two").css({
+            'background-image': $("#0").css("background-image"),
+            'background-position-y': '-192px'
+        });
+        $(".player-one, .player-two").addClass("dragao");
+    }
 
     //Carrega os ícones que representam o mapa na caixa de seleção.
     for (let i = 0; i < maps.length; i++) {
         $(".map-select").append("<div class='map-icon'><p>" + (i + 1) + "</p></div>");
     }
 
-    //Exibe o mapa referenciado pelo ícone
+    //Exibe o mapa referenciado pelo ícone.
     $(".map-icon").mouseover(function () {
         let i = $(this).find("p").text();
         clearMap();
@@ -55,6 +63,7 @@ $(function () {
         $("#cenario").children(".not-empty").remove();
     }
 
+    //Constrói o mapa.
     function buildMap(blocks) {
         for (let i = 0; i < 25; i++) {
             if (tiles[blocks[i]] == "img/tiles/default_lava_flowing_animated.png") {
@@ -83,46 +92,30 @@ $(function () {
 
     //Inicializa o personagem selecionado.
     $(".player-face").click(function () {
-        if (selectPlayer == "one") {
-            $(".player-one").css({
-                'background-image': $(this).css("background-image"),
-                'background-position-y': '-192px'
-            });
-            //Atribui a animação apropriada.
-            if ($(this).css("background-size") == "288px") {
-                $(".player-one").addClass("dragao-3steps");
-            } else {
-                $(".player-one").removeClass("dragao-3steps");
-                $(".player-one").addClass("dragao");
-            }
-            $(".one img").css({
-                "background-image": $(this).css("background-image"),
-                "background-position-x": $(this).css("background-position-x")
-            });
-            $(".select-player-one").hide(); //esconde o botão de add personagem
-            loadPlayerStatus($(this), "one");
-            $(".one").show(); //mostra o status do player selecionado
-
-        } else if (selectPlayer == "two") {
-            $(".player-two").css({
-                'background-image': $(this).css("background-image"),
-                'background-position-y': '-96px'
-            });
-            //Atribui a animação apropriada.
-            if ($(this).css("background-size") == "288px") {
-                $(".player-two").addClass("dragao-3steps");
-            } else {
-                $(".player-two").removeClass("dragao-3steps");
-                $(".player-two").addClass("dragao");
-            }
-            $(".two img").css({
-                "background-image": $(this).css("background-image"),
-                "background-position-x": $(this).css("background-position-x")
-            });
-            $(".select-player-two").hide();
-            loadPlayerStatus($(this), "two");
-            $(".two").show();
+        $(".player-" + selectPlayer).css({
+            'background-image': $(this).css("background-image"),
+            'background-position-y': '-192px'
+        });
+        //Posiciona o player dois na direção correta.
+        if (selectPlayer == "two") {
+            $(".player-two").css("background-position-y", "-96px");
         }
+
+        //Atribui a animação apropriada.
+        if ($(this).css("background-size") == "288px") {
+            $(".player-" + selectPlayer).addClass("dragao-3steps");
+        } else {
+            $(".player-" + selectPlayer).removeClass("dragao-3steps");
+            $(".player-" + selectPlayer).addClass("dragao");
+        }
+        $("." + selectPlayer + " img").css({
+            "background-image": $(this).css("background-image"),
+            "background-position-x": $(this).css("background-position-x")
+        });
+        $(".select-player-" + selectPlayer).hide(); //esconde o botão de add personagem
+        loadPlayerStatus($(this), selectPlayer);
+        $("." + selectPlayer).show(); //mostra o status do player selecionado
+
         //Fecha a caixa de seleção
         $(".player-select-box").css("display", "none");
         $("body").removeClass("select-open");
@@ -153,34 +146,56 @@ $(function () {
         $("." + player + " .attack").attr("value", players[id].attack);
     }
 
+    function canMoveTo(player, direction) {
+        if (parseInt($(player).css(direction)) >= 128) {
+            return true;
+        } else { return false };
+    }
+
     //Funções para mover o personagem através do teclado.
     $(document).keydown(function (e) {
-        //Movimenação do player 1
+        //Movimentação do player 1
         if (e.which == 65) { //left
-            $(".player-one").animate({ left: '-=128px' });
+            if (canMoveTo(".player-one", "left")) {
+                $(".player-one").filter(":not(:animated)").animate({ left: '-=128px' });
+            }
             $(".player-one").css("background-position-y", "-96px");
         } else if (e.which == 87) { //up
-            $(".player-one").animate({ top: '-=128px' });
+            if (canMoveTo(".player-one", "top")) {
+                $(".player-one").filter(":not(:animated)").animate({ top: '-=128px' });
+            }
             $(".player-one").css("background-position-y", "-288px");
         } else if (e.which == 68) { //right
-            $(".player-one").animate({ left: '+=128px' });
+            if (canMoveTo(".player-one", "right")) {
+                $(".player-one").filter(":not(:animated)").animate({ left: '+=128px' });
+            }
             $(".player-one").css("background-position-y", "-192px");
         } else if (e.which == 83) { //down
-            $(".player-one").animate({ top: '+=128px' });
+            if (canMoveTo(".player-one", "bottom")) {
+                $(".player-one").filter(":not(:animated)").animate({ top: '+=128px' });
+            }
             $(".player-one").css("background-position-y", "0");
         }
         //Movimentação do player 2
         if (e.which == 37) { //left
-            $(".player-two").animate({ left: '-=128px' });
+            if (canMoveTo(".player-two", "left")) {
+                $(".player-two").filter(":not(:animated)").animate({ right: '+=128px' });
+            }
             $(".player-two").css("background-position-y", "-96px");
         } else if (e.which == 38) { //up
-            $(".player-two").animate({ top: '-=128px' });
+            if (canMoveTo(".player-two", "top")) {
+                $(".player-two").filter(":not(:animated)").animate({ top: '-=128px' });
+            }
             $(".player-two").css("background-position-y", "-288px");
         } else if (e.which == 39) { //right
-            $(".player-two").animate({ left: '+=128px' });
+            if (canMoveTo(".player-two", "right")) {
+                $(".player-two").filter(":not(:animated)").animate({ right: '-=128px' });
+            }
             $(".player-two").css("background-position-y", "-192px");
         } else if (e.which == 40) { //down
-            $(".player-two").animate({ top: '+=128px' });
+            if (canMoveTo(".player-two", "bottom")) {
+                $(".player-two").filter(":not(:animated)").animate({ top: '+=128px' });
+            }
             $(".player-two").css("background-position-y", "0");
         }
     });
