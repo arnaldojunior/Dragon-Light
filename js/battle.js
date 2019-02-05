@@ -14,6 +14,8 @@ var players = [
 
 $(function () {
     var selectPlayer = null;
+    var fireballsQuant = 0;
+    var playerOneCanShot = true;
     var tiles = ["img/tiles/default_cobble.png", "img/tiles/default_desert_cobble.png", "img/tiles/default_desert_sand.png",
         "img/tiles/default_dirt.png", "img/tiles/default_dry_grass.png", "img/tiles/default_gold_block.png",
         "img/tiles/default_grass.png", "img/tiles/default_gravel.png", "img/tiles/default_ice.png",
@@ -35,8 +37,10 @@ $(function () {
         buildMap(maps[0]);
         $(".player-one, .player-two").css({
             'background-image': $("#0").css("background-image"),
-            'background-position-y': '-192px'
+            'background-position-y': '-192px',
+            display: 'block'
         });
+        $(".player-two").css('background-position-y', '-96px');
         $(".player-one, .player-two").addClass("dragao");
     }
 
@@ -152,29 +156,90 @@ $(function () {
         } else { return false };
     }
 
+    function fire(player) {
+        let player_position_x = parseInt($(player).css("left")) + 16;
+        let player_position_y = parseInt($(player).css("top")) + 16;
+        let fire_direction;
+        let fire_position_x;
+        let fire_position_y;
+
+        playerOneCanShot = false;
+
+        //Alinha a direção e posição do fogo com a posição do dragão.
+        if ($(player).css("background-position-y") == "0px") { //looking down
+            fire_direction = "-384px";
+            fire_position_y = player_position_y + 32;
+            fire_position_x = player_position_x;
+        } else if ($(player).css("background-position-y") == "-96px") { //looking left
+            fire_direction = "0px";
+            fire_position_y = player_position_y;
+            fire_position_x = player_position_x - 32;
+        } else if ($(player).css("background-position-y") == "-192px") { //looking right
+            fire_direction = "-256px";
+            fire_position_y = player_position_y;
+            fire_position_x = player_position_x + 64;
+        } else { //looking up
+            fire_direction = "-128px";
+            fire_position_y = player_position_y - 32;
+            fire_position_x = player_position_x;
+        }
+
+        $("#cenario").append("<div class='fireball " + fireballsQuant + "'></div>")
+            .children("." + fireballsQuant).animate({
+                top: fire_position_y,
+                left: fire_position_x,
+                'background-position-y': fire_direction
+            }, 0, function () {
+                //Encaminha o fogo para uma direção específica.
+                if (fire_direction == "0px") { //left
+                    $(this).animate({ left: 0 }, 2000, function() {
+                        playerOneCanShot = true;
+                    });
+                } else if (fire_direction == "-128px") { //top
+                    $(this).animate({ top: 0 }, 2000, function() {
+                        playerOneCanShot = true;
+                    });
+                } else if (fire_direction == "-256px") { //right
+                    $(this).animate({ left: 576 }, 2000, function() {
+                        playerOneCanShot = true;
+                    });
+                } else { //bottom
+                    $(this).animate({ top: 576 }, 2000, function() {
+                        playerOneCanShot = true;
+                    });
+                }
+                $(this).fadeOut('slow');
+            });
+        fireballsQuant++;
+    }
+
     //Funções para mover o personagem através do teclado.
     $(document).keydown(function (e) {
         //Movimentação do player 1
         if (e.which == 65) { //left
             if (canMoveTo(".player-one", "left")) {
-                $(".player-one").filter(":not(:animated)").animate({ left: '-=128px' });
+                $(".player-one").filter(":not(:animated)").animate({ left: '-=128px' }, 'linear');
             }
             $(".player-one").css("background-position-y", "-96px");
         } else if (e.which == 87) { //up
             if (canMoveTo(".player-one", "top")) {
-                $(".player-one").filter(":not(:animated)").animate({ top: '-=128px' });
+                $(".player-one").filter(":not(:animated)").animate({ top: '-=128px' }, 'linear');
             }
             $(".player-one").css("background-position-y", "-288px");
         } else if (e.which == 68) { //right
             if (canMoveTo(".player-one", "right")) {
-                $(".player-one").filter(":not(:animated)").animate({ left: '+=128px' });
+                $(".player-one").filter(":not(:animated)").animate({ left: '+=128px' }, 'linear');
             }
             $(".player-one").css("background-position-y", "-192px");
         } else if (e.which == 83) { //down
             if (canMoveTo(".player-one", "bottom")) {
-                $(".player-one").filter(":not(:animated)").animate({ top: '+=128px' });
+                $(".player-one").filter(":not(:animated)").animate({ top: '+=128px' }, 'linear');
             }
             $(".player-one").css("background-position-y", "0");
+        } else if (e.which == 70) { //fireball
+            if (playerOneCanShot) {
+                fire(".player-one");
+            }
         }
         //Movimentação do player 2
         if (e.which == 37) { //left

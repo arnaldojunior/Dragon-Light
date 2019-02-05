@@ -19,9 +19,17 @@
 .dragao { animation: dragao 1s steps(4) infinite; background-size: 384px }
 .dragao-3steps { animation: dragao-3steps 0.75s steps(3) infinite; background-size: 288px }
 
+.fireball { 
+    animation: fireball 1s steps(8) infinite; 
+    background-image: url(../img/fireball.png);
+    background-size: 512px }
+
 @keyframes dragao {
     100% { background-position-x: -384px };
 }
 @keyframes dragao-3steps {
     100% { background-position-x: -288px };
+}
+@keyframes fireball {
+    100% { background-position-x: -512px };
 }

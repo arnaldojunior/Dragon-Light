@@ -113,10 +113,17 @@
     height: 96px;
     position: absolute;
     top: 270px;
-    display: block;
+    display: none;
 }
 .player-one { left: 16px; }
 .player-two { right: 16px; }
+
+.fireball {
+    width: 64px;
+    height: 64px;
+    position: absolute;
+    border-radius: 15px;
+}
 
 /* Caixa de seleção da personagem */
 .player-select-box {
