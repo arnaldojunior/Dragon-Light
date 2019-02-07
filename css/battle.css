@@ -118,7 +118,7 @@
 .player-one { left: 16px; }
 .player-two { right: 16px; }
 
-.fireball {
+.fireball, .explosion {
     width: 64px;
     height: 64px;
     position: absolute;

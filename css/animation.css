@@ -22,14 +22,25 @@
 .fireball { 
     animation: fireball 1s steps(8) infinite; 
     background-image: url(../img/fireball.png);
-    background-size: 512px }
+}
+
+.explosion {
+    animation: explosion_y 1s steps(4) 1, explosion_x 0.25s steps(4) 1;
+    background-image: url(../img/explosion.png);
+}
 
 @keyframes dragao {
-    100% { background-position-x: -384px };
+    100% { background-position-x: -384px }
 }
 @keyframes dragao-3steps {
-    100% { background-position-x: -288px };
+    100% { background-position-x: -288px }
 }
 @keyframes fireball {
-    100% { background-position-x: -512px };
+    100% { background-position-x: -512px }
+}
+@keyframes explosion_x {
+    100% { background-position-x: -256px; }
+}
+@keyframes explosion_y {
+    100% { background-position-y: -256px; }
 }

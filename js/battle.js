@@ -12,10 +12,14 @@ var players = [
     new Player("Blue Green Dragon", 8, 2)
 ];
 
+var playerOne;
+var playerTwo;
+
 $(function () {
     var selectPlayer = null;
     var fireballsQuant = 0;
     var playerOneCanShot = true;
+    var colisionDetector = setInterval(detectColision, 200);
     var tiles = ["img/tiles/default_cobble.png", "img/tiles/default_desert_cobble.png", "img/tiles/default_desert_sand.png",
         "img/tiles/default_dirt.png", "img/tiles/default_dry_grass.png", "img/tiles/default_gold_block.png",
         "img/tiles/default_grass.png", "img/tiles/default_gravel.png", "img/tiles/default_ice.png",
@@ -129,6 +133,7 @@ $(function () {
         }
     });
 
+    //Verifica se os dois jogadores foram selecionados.
     function playersSelected() {
         if (($(".player-one").css("background-image") != 'none')
             && ($(".player-two").css("background-image") != 'none')) {
@@ -150,12 +155,6 @@ $(function () {
         $("." + player + " .attack").attr("value", players[id].attack);
     }
 
-    function canMoveTo(player, direction) {
-        if (parseInt($(player).css(direction)) >= 128) {
-            return true;
-        } else { return false };
-    }
-
     function fire(player) {
         let player_position_x = parseInt($(player).css("left")) + 16;
         let player_position_y = parseInt($(player).css("top")) + 16;
@@ -168,19 +167,19 @@ $(function () {
         //Alinha a direção e posição do fogo com a posição do dragão.
         if ($(player).css("background-position-y") == "0px") { //looking down
             fire_direction = "-384px";
-            fire_position_y = player_position_y + 32;
+            fire_position_y = player_position_y + 80;
             fire_position_x = player_position_x;
         } else if ($(player).css("background-position-y") == "-96px") { //looking left
             fire_direction = "0px";
-            fire_position_y = player_position_y;
-            fire_position_x = player_position_x - 32;
+            fire_position_y = player_position_y + 16;
+            fire_position_x = player_position_x - 90;
         } else if ($(player).css("background-position-y") == "-192px") { //looking right
             fire_direction = "-256px";
-            fire_position_y = player_position_y;
-            fire_position_x = player_position_x + 64;
+            fire_position_y = player_position_y + 16;
+            fire_position_x = player_position_x + 90;
         } else { //looking up
             fire_direction = "-128px";
-            fire_position_y = player_position_y - 32;
+            fire_position_y = player_position_y - 90;
             fire_position_x = player_position_x;
         }
 
@@ -192,25 +191,35 @@ $(function () {
             }, 0, function () {
                 //Encaminha o fogo para uma direção específica.
                 if (fire_direction == "0px") { //left
-                    $(this).animate({ left: 0 }, 2000, function() {
+                    $(this).animate({ left: 0 }, 1000, 'linear', function () {
                         playerOneCanShot = true;
-                    });
+                        $(this).remove();
+                    }).fadeOut('slow');
                 } else if (fire_direction == "-128px") { //top
-                    $(this).animate({ top: 0 }, 2000, function() {
+                    $(this).animate({ top: 0 }, 1000, 'linear', function () {
                         playerOneCanShot = true;
+                        $(this).remove();
                     });
                 } else if (fire_direction == "-256px") { //right
-                    $(this).animate({ left: 576 }, 2000, function() {
+                    $(this).animate({ left: 576 }, 1000, 'linear', function () {
                         playerOneCanShot = true;
+                        $(this).remove();
                     });
                 } else { //bottom
-                    $(this).animate({ top: 576 }, 2000, function() {
+                    $(this).animate({ top: 576 }, 1000, 'linear', function () {
                         playerOneCanShot = true;
+                        $(this).remove();
                     });
                 }
-                $(this).fadeOut('slow');
             });
         fireballsQuant++;
+    }
+
+    //Verifica se o jogador informado pode se mover para a direção especificada.
+    function canMoveTo(player, direction) {
+        if (parseInt($(player).css(direction)) >= 128) {
+            return true;
+        } else { return false };
     }
 
     //Funções para mover o personagem através do teclado.
@@ -218,50 +227,103 @@ $(function () {
         //Movimentação do player 1
         if (e.which == 65) { //left
             if (canMoveTo(".player-one", "left")) {
-                $(".player-one").filter(":not(:animated)").animate({ left: '-=128px' }, 'linear');
+                $(".player-one").filter(":not(:animated)").animate({ left: '-=128px' }, 600, 'linear');
             }
             $(".player-one").css("background-position-y", "-96px");
         } else if (e.which == 87) { //up
             if (canMoveTo(".player-one", "top")) {
-                $(".player-one").filter(":not(:animated)").animate({ top: '-=128px' }, 'linear');
+                $(".player-one").filter(":not(:animated)").animate({ top: '-=128px' }, 600, 'linear');
             }
             $(".player-one").css("background-position-y", "-288px");
         } else if (e.which == 68) { //right
             if (canMoveTo(".player-one", "right")) {
-                $(".player-one").filter(":not(:animated)").animate({ left: '+=128px' }, 'linear');
+                $(".player-one").filter(":not(:animated)").animate({ left: '+=128px' }, 600, 'linear');
             }
             $(".player-one").css("background-position-y", "-192px");
         } else if (e.which == 83) { //down
             if (canMoveTo(".player-one", "bottom")) {
-                $(".player-one").filter(":not(:animated)").animate({ top: '+=128px' }, 'linear');
+                $(".player-one").filter(":not(:animated)").animate({ top: '+=128px' }, 600, 'linear');
             }
             $(".player-one").css("background-position-y", "0");
         } else if (e.which == 70) { //fireball
             if (playerOneCanShot) {
                 fire(".player-one");
             }
+            detectColision();
         }
         //Movimentação do player 2
         if (e.which == 37) { //left
             if (canMoveTo(".player-two", "left")) {
-                $(".player-two").filter(":not(:animated)").animate({ right: '+=128px' });
+                $(".player-two").filter(":not(:animated)").animate({ right: '+=128px' }, 600, 'linear');
             }
             $(".player-two").css("background-position-y", "-96px");
         } else if (e.which == 38) { //up
             if (canMoveTo(".player-two", "top")) {
-                $(".player-two").filter(":not(:animated)").animate({ top: '-=128px' });
+                $(".player-two").filter(":not(:animated)").animate({ top: '-=128px' }, 600, 'linear');
             }
             $(".player-two").css("background-position-y", "-288px");
         } else if (e.which == 39) { //right
             if (canMoveTo(".player-two", "right")) {
-                $(".player-two").filter(":not(:animated)").animate({ right: '-=128px' });
+                $(".player-two").filter(":not(:animated)").animate({ right: '-=128px' }, 600, 'linear');
             }
             $(".player-two").css("background-position-y", "-192px");
         } else if (e.which == 40) { //down
             if (canMoveTo(".player-two", "bottom")) {
-                $(".player-two").filter(":not(:animated)").animate({ top: '+=128px' });
+                $(".player-two").filter(":not(:animated)").animate({ top: '+=128px' }, 600, 'linear');
             }
             $(".player-two").css("background-position-y", "0");
         }
     });
+
+    //Percorre todos os elementos verificando se houve colisão.
+    function detectColision() {
+        let gameElements = $("#cenario").children(".fireball, .player");
+        console.log("Elements: " + gameElements.length);
+        for (let i = 0; i < gameElements.length; i++) {
+            let element_x = gameElements[i];
+
+            for (let j = i + 1; j < gameElements.length; j++) {
+                let element_y = gameElements[j];
+
+                if (colisionDetected($(element_x), $(element_y))) {
+                    if ($(element_x).hasClass("fireball")) {
+                        explodeFireball($(element_x));
+                    }
+                    if ($(element_y).hasClass("fireball")) {
+                        explodeFireball($(element_y));
+                    }
+                }
+            }
+        }
+    }
+
+    function explodeFireball(fireball) {
+        console.log("fireball");
+        $(fireball).stop(true, false).removeClass().fadeIn(0)
+            .css("background-position-y", 0).addClass("explosion").fadeOut(1100);
+        playerOneCanShot = true;
+    }
+
+    //Verifica se houve colisão entre os elementos especificados.
+    function colisionDetected(element1, element2) {
+        let obj1X = element1.position().left;
+        let obj1Y = element1.position().top;
+        let obj1Height = element1.outerHeight();
+        let obj1Width = element1.outerWidth();
+        let obj1FullHeight = obj1Y + obj1Height;
+        let obj1FullWidth = obj1X + obj1Width;
+        let obj2X = element2.position().left;
+        let obj2Y = element2.position().top;
+        let obj2Height = element2.outerHeight();
+        let obj2Width = element2.outerWidth();
+        let obj2FullHeight = obj2Y + obj2Height;
+        let obj2FullWidth = obj2X + obj2Width;
+
+        if (obj1FullHeight > obj2Y && obj1Y < obj2FullHeight
+            && obj1FullWidth > obj2X && obj1X < obj2FullWidth) {
+            console.log("Collision");
+            return true;
+        }
+        return false;
+    }
 });
