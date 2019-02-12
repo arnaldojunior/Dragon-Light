@@ -1,5 +1,6 @@
 class Player {
-    constructor(name, life, attack) {
+    constructor(id, name, life, attack) {
+        this.id = id;
         this.name = name;
         this.life = life;
         this.attack = attack;
@@ -18,9 +19,9 @@ class Player {
 }
 
 var players = [
-    new Player("Black Dragon", 10, 3),
-    new Player("Blue Wings Black Dragon", 12, 2),
-    new Player("Blue Green Dragon", 8, 2)
+    new Player(0, "Black Dragon", 10, 3),
+    new Player(1, "Blue Wings Black Dragon", 12, 2),
+    new Player(2, "Blue Green Dragon", 8, 2)
 ];
 
 var playerOne;
@@ -175,10 +176,10 @@ $(function () {
         let id = dragon.attr("id");
         let selectedPlayer = players[id];
         if (player == "one") {
-            playerOne = new Player(selectedPlayer.name, selectedPlayer.life, selectedPlayer.attack);
+            playerOne = new Player(selectedPlayer.id, selectedPlayer.name, selectedPlayer.life, selectedPlayer.attack);
             console.log(playerOne);
         } else {
-            playerTwo = new Player(selectedPlayer.name, selectedPlayer.life, selectedPlayer.attack);
+            playerTwo = new Player(selectedPlayer.id, selectedPlayer.name, selectedPlayer.life, selectedPlayer.attack);
             console.log(playerTwo);
         }
     }
@@ -340,6 +341,7 @@ $(function () {
                     if ($(element_x).hasClass("player-two") || $(element_y).hasClass("player-two")) {
                         playerTwo.fired(playerOne.attack);
                         $(".two .life").attr("value", playerTwo.life);
+                        updateLifeBar(".two", playerTwo.life, playerTwo.id);
 
                         if (playerTwo.isDead()) {
                             endGame($(".player-one"));
@@ -348,6 +350,7 @@ $(function () {
                     if ($(element_x).hasClass("player-one") || $(element_y).hasClass("player-one")) {
                         playerOne.fired(playerTwo.attack);
                         $(".one .life").attr("value", playerOne.life);
+                        updateLifeBar(".one", playerOne.life, playerOne.id);
 
                         if (playerOne.isDead()) {
                             endGame($(".player-two"));
@@ -356,6 +359,20 @@ $(function () {
                 }
             }
         }
+    }
+
+    function updateLifeBar(player, currentLife, playerId) {
+        let lifePercent = (currentLife / players[playerId].life) * 100;
+        let lifeBarColor = "green";
+        if (lifePercent >= 25 && lifePercent < 50) {
+            lifeBarColor = "orange";
+        } else if (lifePercent < 25) {
+            lifeBarColor = "red";
+        }
+        console.log(lifePercent);
+        console.log(lifeBarColor);
+        $(player +" .life-value").text(currentLife);
+        $(player +" .life-bar").animate({"width": lifePercent +"%"}).css("background-color", lifeBarColor);
     }
 
     function explodeFireball(fireball) {
