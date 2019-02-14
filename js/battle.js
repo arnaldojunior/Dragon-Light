@@ -190,7 +190,7 @@ $(function () {
     function loadPlayerStatus(dragon, player) {
         let id = dragon.attr("id");
         $("." + player + " .name").attr("value", players[id].name);
-        $("." + player + " .life").attr("value", players[id].life);
+        $("." + player + " .life-value").text(players[id].life);
         $("." + player + " .attack").attr("value", players[id].attack);
     }
 
